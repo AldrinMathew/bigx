@@ -1,5 +1,40 @@
 #include "./big_int.hpp"
 
+#define _INC_AT_CASE(val)                                                      \
+  case val: {                                                                  \
+    if (_##val == 0) {                                                         \
+      _##val = 1;                                                              \
+    } else {                                                                   \
+      _##val = 0;                                                              \
+      increment_at(index + 1);                                                 \
+    }                                                                          \
+    break;                                                                     \
+  }
+
+#define _INC_AT_10X_CASES(val)                                                 \
+  _INC_AT_CASE(val##0)                                                         \
+  _INC_AT_CASE(val##1)                                                         \
+  _INC_AT_CASE(val##2)                                                         \
+  _INC_AT_CASE(val##3)                                                         \
+  _INC_AT_CASE(val##4)                                                         \
+  _INC_AT_CASE(val##5)                                                         \
+  _INC_AT_CASE(val##6)                                                         \
+  _INC_AT_CASE(val##7)                                                         \
+  _INC_AT_CASE(val##8)                                                         \
+  _INC_AT_CASE(val##9)
+
+#define _INC_AT_100X_CASES(val)                                                \
+  _INC_AT_10X_CASES(val##0)                                                    \
+  _INC_AT_10X_CASES(val##1)                                                    \
+  _INC_AT_10X_CASES(val##2)                                                    \
+  _INC_AT_10X_CASES(val##3)                                                    \
+  _INC_AT_10X_CASES(val##4)                                                    \
+  _INC_AT_10X_CASES(val##5)                                                    \
+  _INC_AT_10X_CASES(val##6)                                                    \
+  _INC_AT_10X_CASES(val##7)                                                    \
+  _INC_AT_10X_CASES(val##8)                                                    \
+  _INC_AT_10X_CASES(val##9)
+
 bigx::bigint_cell::bigint_cell(bigint_cell *_right) {
   reset();
   right = _right;
@@ -176,6 +211,44 @@ bigx::bigint_cell &bigx::bigint_cell::operator=(bigx::bigint_cell &&other) {
   other.reset();
   return *this;
 }
+
+void bigx::bigint_cell::increment_at(int index) {
+  switch (index) {
+    _INC_AT_10X_CASES()
+    _INC_AT_10X_CASES(1)
+    _INC_AT_10X_CASES(2)
+    _INC_AT_10X_CASES(3)
+    _INC_AT_10X_CASES(4)
+    _INC_AT_10X_CASES(5)
+    _INC_AT_10X_CASES(6)
+    _INC_AT_10X_CASES(7)
+    _INC_AT_10X_CASES(8)
+    _INC_AT_10X_CASES(9)
+    _INC_AT_100X_CASES(1)
+    _INC_AT_100X_CASES(2)
+    _INC_AT_100X_CASES(3)
+    _INC_AT_100X_CASES(4)
+    _INC_AT_10X_CASES(50)
+    _INC_AT_CASE(510)
+  case 511: {
+    if (_511 == 0) {
+      _511 = 1;
+    } else {
+      _511 = 0;
+      if (left == nullptr) {
+        extend_left();
+      }
+      left->increment_at(0);
+    }
+    break;
+  }
+  default: {
+    throw exceptions::IndexOutOfRange();
+  }
+  }
+}
+
+bigx::bigint_cell bigx::bigint_cell::operator++() { increment_at(0); }
 
 void bigx::bigint_cell::reset() {
   _0 = 0, _1 = 0, _2 = 0, _3 = 0, _4 = 0, _5 = 0, _6 = 0, _7 = 0, _8 = 0,

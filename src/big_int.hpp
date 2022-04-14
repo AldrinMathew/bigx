@@ -5,6 +5,7 @@
 #include <cstdint>
 
 namespace bigx {
+
 /**
  * @brief A bigint_cell is a unit that is connected to other bigint_cell
  * instances. All these connected instances make up the big integer number.
@@ -131,6 +132,10 @@ struct bigint_cell {
   void reset();
   /// Move assignment operator for bigint_cell
   bigint_cell &operator=(bigint_cell &&cell);
+  /// This function increments the value at a particular bit position
+  void increment_at(int index);
+  /// Increment Operator
+  bigint_cell operator++();
 
 private:
   void copy_values(bigint_cell &other);
