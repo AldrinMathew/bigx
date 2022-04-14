@@ -127,6 +127,8 @@ struct bigint_cell {
   void extend_left();
   /// Trim the extreme left cell in the linked sequence
   void trim_left();
+  /// Reset all values and set all pointers to null
+  void reset();
   /// Move assignment operator for bigint_cell
   bigint_cell &operator=(bigint_cell &&cell);
 };
