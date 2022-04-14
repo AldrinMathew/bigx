@@ -58,6 +58,8 @@ struct bigint_cell {
   void extend_left();
   /// Trim the extreme left cell in the linked sequence
   void trim_left();
+  /// Move assignment operator for bigint_cell
+  bigint_cell &operator=(bigint_cell &&cell);
 };
 } // namespace bigx
 
