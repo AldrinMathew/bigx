@@ -133,7 +133,7 @@ struct bigint_cell {
   bigint_cell &operator=(bigint_cell &&cell);
 
 private:
-  void copy_values(bigint_cell &&other);
+  void copy_values(bigint_cell &other);
 };
 } // namespace bigx
 
