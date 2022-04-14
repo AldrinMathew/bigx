@@ -51,12 +51,7 @@ struct bigint_cell {
    *
    * @param _right The right-side cell to link the new instance to
    */
-  bigint_cell(bigint_cell *_right)
-      : right(_right), left(nullptr), _0(0), _1(0), _2(0), _3(0), _4(0), _5(0),
-        _6(0), _7(0) {
-    /// Linking the right-side cell to this instance
-    this->right->left = this;
-  }
+  bigint_cell(bigint_cell *_right);
 };
 } // namespace bigx
 
