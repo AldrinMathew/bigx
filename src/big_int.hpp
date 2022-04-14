@@ -131,17 +131,9 @@ struct bigint_cell {
   void reset();
   /// Move assignment operator for bigint_cell
   bigint_cell &operator=(bigint_cell &&cell);
-};
-} // namespace bigx
 
-#endif
-
-  /**
-   * @brief Construct a new bigint_cell object
-   *
-   * @param _right The right-side cell to link the new instance to
-   */
-  bigint_cell(bigint_cell *_right);
+private:
+  void copy_values(bigint_cell &&other);
 };
 } // namespace bigx
 
