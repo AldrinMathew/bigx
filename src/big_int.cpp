@@ -189,7 +189,10 @@ void bigx::bigint_cell::increment_at(int index) {
   }
 }
 
-bigx::bigint_cell bigx::bigint_cell::operator++() { increment_at(0); }
+bigx::bigint_cell bigx::bigint_cell::operator++() {
+  increment_at(0);
+  return this;
+}
 
 void bigx::bigint_cell::reset() {
   _RESET_VALUE_10X_STMT()
