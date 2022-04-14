@@ -7,6 +7,29 @@ bigx::bigint_cell::bigint_cell(bigint_cell *_right)
   this->right->left = this;
 }
 
+bigx::bigint_cell::bigint_cell(bigint_cell &&other) {
+  this->_0 = other._0;
+  this->_1 = other._1;
+  this->_2 = other._2;
+  this->_3 = other._3;
+  this->_4 = other._4;
+  this->_5 = other._5;
+  this->_6 = other._6;
+  this->_7 = other._7;
+  this->left = other.left;
+  this->right = other.right;
+  other._0 = 0;
+  other._1 = 0;
+  other._2 = 0;
+  other._3 = 0;
+  other._4 = 0;
+  other._5 = 0;
+  other._6 = 0;
+  other._7 = 0;
+  other.left = nullptr;
+  other.right = nullptr;
+}
+
 bool bigx::bigint_cell::has_left() { return this->left != nullptr; }
 
 bool bigx::bigint_cell::has_right() { return this->right != nullptr; }

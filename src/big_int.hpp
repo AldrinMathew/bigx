@@ -3,7 +3,6 @@
 
 #include "./exceptions.hpp"
 #include "./types.hpp"
-#include "sys/types.h"
 
 namespace bigx {
 /**
@@ -28,6 +27,20 @@ namespace bigx {
  */
 struct bigint_cell {
   /**
+   * @brief Construct a new bigint_cell object
+   *
+   * @param _right The right-side cell to link the new instance to
+   */
+  bigint_cell(bigint_cell *_right);
+
+  /**
+   * @brief Move constructor of bigint_cell
+   *
+   * @param other The rvalue of the other instance
+   */
+  bigint_cell(bigint_cell &&other);
+
+  /**
    * @brief These variables hold the actual bit-data associated with the big
    * integer.
    */
@@ -45,6 +58,10 @@ struct bigint_cell {
   void extend_left();
   /// Trim the extreme left cell in the linked sequence
   void trim_left();
+};
+} // namespace bigx
+
+#endif
 
   /**
    * @brief Construct a new bigint_cell object
