@@ -87,6 +87,33 @@
   _RESET_VALUE_10X_STMT(val##8)                                                \
   _RESET_VALUE_10X_STMT(val##9)
 
+#define _IS_EQUAL_EXPR(val) (_##val == other._##val) &&
+
+#define _IS_EQUAL_10X_EXPR(val)                                                \
+  _IS_EQUAL_EXPR(val##0)                                                       \
+  _IS_EQUAL_EXPR(val##1)                                                       \
+  _IS_EQUAL_EXPR(val##2)                                                       \
+  _IS_EQUAL_EXPR(val##3)                                                       \
+  _IS_EQUAL_EXPR(val##4)                                                       \
+  _IS_EQUAL_EXPR(val##5)                                                       \
+  _IS_EQUAL_EXPR(val##6)                                                       \
+  _IS_EQUAL_EXPR(val##7)                                                       \
+  _IS_EQUAL_EXPR(val##8)                                                       \
+  _IS_EQUAL_EXPR(val##9)
+
+#define _IS_EQUAL_100X_EXPR(val)                                               \
+  _IS_EQUAL_10X_EXPR(1)                                                        \
+  _IS_EQUAL_10X_EXPR(2)                                                        \
+  _IS_EQUAL_10X_EXPR(3)                                                        \
+  _IS_EQUAL_10X_EXPR(4)                                                        \
+  _IS_EQUAL_10X_EXPR(5)                                                        \
+  _IS_EQUAL_10X_EXPR(6)                                                        \
+  _IS_EQUAL_10X_EXPR(7)                                                        \
+  _IS_EQUAL_10X_EXPR(8)                                                        \
+  _IS_EQUAL_10X_EXPR(9)
+
+bigx::bigint_cell::bigint_cell() { reset(); }
+
 bigx::bigint_cell::bigint_cell(bigint_cell *_right) {
   reset();
   right = _right;
@@ -197,6 +224,53 @@ bigx::bigint_cell &bigx::bigint_cell::operator++() {
 bigx::bigint_cell bigx::bigint_cell::operator++(int) {
   increment_at(0);
   return this;
+}
+
+bool bigx::bigint_cell::operator==(const bigx::bigint_cell &other) const {
+  bool leftVal = false;
+  if (left == nullptr) {
+    if (other.left != nullptr) {
+      leftVal = false;
+    } else {
+      leftVal = true;
+    }
+  } else {
+    if (other.left == nullptr) {
+      leftVal = false;
+    } else {
+      leftVal = ((*left).operator==(other.left));
+    }
+  }
+  if (leftVal) {
+    bool rightVal = false;
+    if (right == nullptr) {
+      if (other.right != nullptr) {
+        rightVal = false;
+      } else {
+        rightVal = true;
+      }
+    } else {
+      if (other.right == nullptr) {
+        rightVal = false;
+      } else {
+        rightVal = ((*right).operator==(other.right));
+      }
+    }
+    if (rightVal) {
+      return (_IS_EQUAL_10X_EXPR() _IS_EQUAL_10X_EXPR(1) _IS_EQUAL_10X_EXPR(
+          2) _IS_EQUAL_10X_EXPR(3) _IS_EQUAL_10X_EXPR(4) _IS_EQUAL_10X_EXPR(5)
+                  _IS_EQUAL_10X_EXPR(6) _IS_EQUAL_10X_EXPR(7)
+                      _IS_EQUAL_10X_EXPR(8) _IS_EQUAL_10X_EXPR(9)
+                          _IS_EQUAL_100X_EXPR(1) _IS_EQUAL_100X_EXPR(2)
+                              _IS_EQUAL_100X_EXPR(3) _IS_EQUAL_100X_EXPR(4)
+                                  _IS_EQUAL_10X_EXPR(50)
+                                      _IS_EQUAL_EXPR(510)(_511 == other._511));
+    } else {
+      return rightVal;
+    }
+  } else {
+    return leftVal;
+  }
 }
 
 void bigx::bigint_cell::reset() {

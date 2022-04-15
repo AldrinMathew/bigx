@@ -143,6 +143,8 @@ struct bigint_cell {
   bigint_cell &operator++();
   /// Increment Operator - Postfix
   bigint_cell operator++(int);
+  /// Equality Operator
+  bool operator==(const bigx::bigint_cell &other) const;
 
 private:
   /// Copy values from other bigint_cell instance
