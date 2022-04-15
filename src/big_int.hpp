@@ -3,6 +3,7 @@
 
 #include "./exceptions.hpp"
 #include <cstdint>
+#include <string>
 
 namespace bigx {
 
@@ -25,6 +26,12 @@ namespace bigx {
  *
  */
 struct bigint_cell {
+  /**
+   * @brief Default constructor
+   *
+   */
+  bigint_cell();
+
   /**
    * @brief Construct a new bigint_cell object
    *
@@ -132,13 +139,16 @@ struct bigint_cell {
   void reset();
   /// Move assignment operator for bigint_cell
   bigint_cell &operator=(bigint_cell &&cell);
-  /// This function increments the value at a particular bit position
-  void increment_at(int index);
-  /// Increment Operator
-  bigint_cell operator++();
+  /// Increment Operator - Prefix
+  bigint_cell &operator++();
+  /// Increment Operator - Postfix
+  bigint_cell operator++(int);
 
 private:
+  /// Copy values from other bigint_cell instance
   void copy_values(bigint_cell &other);
+  /// This function increments the value at a particular bit position
+  void increment_at(int index);
 };
 } // namespace bigx
 

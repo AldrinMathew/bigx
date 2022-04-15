@@ -189,7 +189,12 @@ void bigx::bigint_cell::increment_at(int index) {
   }
 }
 
-bigx::bigint_cell bigx::bigint_cell::operator++() {
+bigx::bigint_cell &bigx::bigint_cell::operator++() {
+  increment_at(0);
+  return *this;
+}
+
+bigx::bigint_cell bigx::bigint_cell::operator++(int) {
   increment_at(0);
   return this;
 }
