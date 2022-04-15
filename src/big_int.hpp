@@ -145,6 +145,13 @@ struct bigint_cell {
   bigint_cell operator++(int);
   /// Equality Operator
   bool operator==(const bigx::bigint_cell &other) const;
+  /**
+   * @brief Loops as many times as is represented by this bigint_cell number and
+   * calls the provided function
+   *
+   * @param fn Function to be called in each and every iteration
+   */
+  void loop(std::function<void()> fn);
 
 private:
   /// Copy values from other bigint_cell instance

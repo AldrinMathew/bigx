@@ -273,6 +273,14 @@ bool bigx::bigint_cell::operator==(const bigx::bigint_cell &other) const {
   }
 }
 
+void bigx::bigint_cell::loop(std::function<void()> fn) {
+  auto count = bigx::bigint_cell();
+  while (count != this) {
+    fn();
+    count++;
+  }
+}
+
 void bigx::bigint_cell::reset() {
   _RESET_VALUE_10X_STMT()
   _RESET_VALUE_10X_STMT(1)
