@@ -12,3 +12,7 @@ add_link_options("-fuse-ld=lld")
 add_library(bigint 
                 big_int.cpp
                 exceptions.cpp)
+add_executable(test
+                test.cpp
+                big_int.cpp
+                exceptions.cpp)

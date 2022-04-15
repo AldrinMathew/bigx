@@ -4,3 +4,4 @@ tests/
 rebuild
 refresh
 test
+src/test.cpp
