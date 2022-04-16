@@ -145,6 +145,10 @@ struct bigint_cell {
   bigint_cell operator++(int);
   /// Equality Operator
   bool operator==(const bigx::bigint_cell &other) const;
+  bool operator==(bigx::bigint_cell &other);
+  /// Inequality Operator
+  bool operator!=(const bigx::bigint_cell &other) const;
+  bool operator!=(bigx::bigint_cell &other);
   /**
    * @brief Loops as many times as is represented by this bigint_cell number and
    * calls the provided function
