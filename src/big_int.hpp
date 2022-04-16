@@ -173,7 +173,7 @@ private:
 
   void increment_string(std::string &result, size_t index);
 
-  static std::string bit_to_string(bool val);
+  inline static std::string bit_to_string(bool val);
 };
 } // namespace bigx
 

@@ -533,10 +533,6 @@ std::string bigx::bigint_cell::to_binary_string() {
   return result;
 }
 
-std::string bigx::bigint_cell::bit_to_string(bool val) {
-  if (val) {
-    return "1";
-  } else {
-    return "0";
-  }
+inline std::string bigx::bigint_cell::bit_to_string(bool val) {
+  return (val ? std::string("1") : std::string("0"));
 }
