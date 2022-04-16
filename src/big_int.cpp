@@ -199,11 +199,11 @@ void bigx::bigint_cell::increment_at(int index) {
     _INC_AT_10X_CASES(50)
     _INC_AT_CASE(510)
   case 511: {
-    if (_511 == 0) {
-      _511 = 1;
-    } else {
-      _511 = 0;
-      if (left == nullptr) {
+    if (_511 == 0b0) {
+      _511 = 0b1;
+    } else if (_511 == 0b1) {
+      _511 = 0b0;
+      if (!has_left()) {
         extend_left();
       }
       left->increment_at(0);
@@ -211,7 +211,14 @@ void bigx::bigint_cell::increment_at(int index) {
     break;
   }
   default: {
-    throw exceptions::IndexOutOfRange();
+    if (index < 0) {
+      throw exceptions::NegativeIndex();
+    }
+    if (has_left()) {
+      left->increment_at(index - 512);
+    } else {
+      throw exceptions::IndexOutOfRange();
+    }
   }
   }
 }
@@ -228,32 +235,32 @@ bigx::bigint_cell bigx::bigint_cell::operator++(int) {
 
 bool bigx::bigint_cell::operator==(const bigx::bigint_cell &other) const {
   bool leftVal = false;
-  if (left == nullptr) {
-    if (other.left != nullptr) {
+  if (has_left()) {
+    if (other.has_left()) {
+      leftVal = (left->operator==(*(other.left)));
+    } else {
+      leftVal = false;
+    }
+  } else {
+    if (other.has_left()) {
       leftVal = false;
     } else {
       leftVal = true;
     }
-  } else {
-    if (other.left == nullptr) {
-      leftVal = false;
-    } else {
-      leftVal = ((*left).operator==(other.left));
-    }
   }
   if (leftVal) {
     bool rightVal = false;
-    if (right == nullptr) {
-      if (other.right != nullptr) {
+    if (has_right()) {
+      if (other.has_right()) {
+        rightVal = (right->operator==(*(other.right)));
+      } else {
+        rightVal = false;
+      }
+    } else {
+      if (other.has_right()) {
         rightVal = false;
       } else {
         rightVal = true;
-      }
-    } else {
-      if (other.right == nullptr) {
-        rightVal = false;
-      } else {
-        rightVal = ((*right).operator==(other.right));
       }
     }
     if (rightVal) {
@@ -273,11 +280,66 @@ bool bigx::bigint_cell::operator==(const bigx::bigint_cell &other) const {
   }
 }
 
+bool bigx::bigint_cell::operator==(bigx::bigint_cell &other) {
+  bool leftVal = false;
+  if (has_left()) {
+    if (other.has_left()) {
+      leftVal = (left->operator==(*(other.left)));
+    } else {
+      leftVal = false;
+    }
+  } else {
+    if (other.has_left()) {
+      leftVal = false;
+    } else {
+      leftVal = true;
+    }
+  }
+  if (leftVal) {
+    bool rightVal = false;
+    if (has_right()) {
+      if (other.has_right()) {
+        rightVal = (right->operator==(*(other.right)));
+      } else {
+        rightVal = false;
+      }
+    } else {
+      if (other.has_right()) {
+        rightVal = false;
+      } else {
+        rightVal = true;
+      }
+    }
+    if (rightVal) {
+      return (_IS_EQUAL_10X_EXPR() _IS_EQUAL_10X_EXPR(1) _IS_EQUAL_10X_EXPR(
+          2) _IS_EQUAL_10X_EXPR(3) _IS_EQUAL_10X_EXPR(4) _IS_EQUAL_10X_EXPR(5)
+                  _IS_EQUAL_10X_EXPR(6) _IS_EQUAL_10X_EXPR(7)
+                      _IS_EQUAL_10X_EXPR(8) _IS_EQUAL_10X_EXPR(9)
+                          _IS_EQUAL_100X_EXPR(1) _IS_EQUAL_100X_EXPR(2)
+                              _IS_EQUAL_100X_EXPR(3) _IS_EQUAL_100X_EXPR(4)
+                                  _IS_EQUAL_10X_EXPR(50)
+                                      _IS_EQUAL_EXPR(510)(_511 == other._511));
+    } else {
+      return rightVal;
+    }
+  } else {
+    return leftVal;
+  };
+}
+
+bool bigx::bigint_cell::operator!=(const bigx::bigint_cell &other) const {
+  return !(*this == other);
+}
+
+bool bigx::bigint_cell::operator!=(bigx::bigint_cell &other) {
+  return !(*this == other);
+}
+
 void bigx::bigint_cell::loop(std::function<void()> fn) {
   auto count = bigx::bigint_cell();
-  while (count != this) {
+  while (operator!=(count)) {
     fn();
-    count++;
+    count.increment_at(0);
   }
 }
 
