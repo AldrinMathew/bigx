@@ -28,10 +28,10 @@
 
 #define _INC_AT_CASE(val)                                                      \
   case val: {                                                                  \
-    if (_##val == 0) {                                                         \
-      _##val = 1;                                                              \
-    } else {                                                                   \
-      _##val = 0;                                                              \
+    if (_##val == 0b0) {                                                       \
+      _##val = ~_##val;                                                        \
+    } else if (_##val == 0b1) {                                                \
+      _##val = ~_##val;                                                        \
       increment_at(index + 1);                                                 \
     }                                                                          \
     break;                                                                     \
@@ -61,7 +61,7 @@
   _INC_AT_10X_CASES(val##8)                                                    \
   _INC_AT_10X_CASES(val##9)
 
-#define _RESET_VALUE_STMT(val) _##val = 0;
+#define _RESET_VALUE_STMT(val) _##val = 0b0;
 
 #define _RESET_VALUE_10X_STMT(val)                                             \
   _RESET_VALUE_STMT(val##0)                                                    \
@@ -102,15 +102,42 @@
   _IS_EQUAL_EXPR(val##9)
 
 #define _IS_EQUAL_100X_EXPR(val)                                               \
-  _IS_EQUAL_10X_EXPR(1)                                                        \
-  _IS_EQUAL_10X_EXPR(2)                                                        \
-  _IS_EQUAL_10X_EXPR(3)                                                        \
-  _IS_EQUAL_10X_EXPR(4)                                                        \
-  _IS_EQUAL_10X_EXPR(5)                                                        \
-  _IS_EQUAL_10X_EXPR(6)                                                        \
-  _IS_EQUAL_10X_EXPR(7)                                                        \
-  _IS_EQUAL_10X_EXPR(8)                                                        \
-  _IS_EQUAL_10X_EXPR(9)
+  _IS_EQUAL_10X_EXPR(val##0)                                                   \
+  _IS_EQUAL_10X_EXPR(val##1)                                                   \
+  _IS_EQUAL_10X_EXPR(val##2)                                                   \
+  _IS_EQUAL_10X_EXPR(val##3)                                                   \
+  _IS_EQUAL_10X_EXPR(val##4)                                                   \
+  _IS_EQUAL_10X_EXPR(val##5)                                                   \
+  _IS_EQUAL_10X_EXPR(val##6)                                                   \
+  _IS_EQUAL_10X_EXPR(val##7)                                                   \
+  _IS_EQUAL_10X_EXPR(val##8)                                                   \
+  _IS_EQUAL_10X_EXPR(val##9)
+
+#define _BITSTRING_STMT(val) bit_to_string(_##val) +
+
+#define _BITSTRING_10X_STMT(val)                                               \
+  _BITSTRING_STMT(val##9)                                                      \
+  _BITSTRING_STMT(val##8)                                                      \
+  _BITSTRING_STMT(val##7)                                                      \
+  _BITSTRING_STMT(val##6)                                                      \
+  _BITSTRING_STMT(val##5)                                                      \
+  _BITSTRING_STMT(val##4)                                                      \
+  _BITSTRING_STMT(val##3)                                                      \
+  _BITSTRING_STMT(val##2)                                                      \
+  _BITSTRING_STMT(val##1)                                                      \
+  _BITSTRING_STMT(val##0)
+
+#define _BITSTRING_100X_STMT(val)                                              \
+  _BITSTRING_10X_STMT(val##9)                                                  \
+  _BITSTRING_10X_STMT(val##8)                                                  \
+  _BITSTRING_10X_STMT(val##7)                                                  \
+  _BITSTRING_10X_STMT(val##6)                                                  \
+  _BITSTRING_10X_STMT(val##5)                                                  \
+  _BITSTRING_10X_STMT(val##4)                                                  \
+  _BITSTRING_10X_STMT(val##3)                                                  \
+  _BITSTRING_10X_STMT(val##2)                                                  \
+  _BITSTRING_10X_STMT(val##1)                                                  \
+  _BITSTRING_10X_STMT(val##0)
 
 bigx::bigint_cell::bigint_cell() { reset(); }
 
@@ -128,9 +155,9 @@ bigx::bigint_cell::bigint_cell(bigint_cell &&other) {
   other.reset();
 }
 
-bool bigx::bigint_cell::has_left() { return left != nullptr; }
+bool bigx::bigint_cell::has_left() const { return left != nullptr; }
 
-bool bigx::bigint_cell::has_right() { return right != nullptr; }
+bool bigx::bigint_cell::has_right() const { return right != nullptr; }
 
 void bigx::bigint_cell::extend_left() {
   if (has_left()) {
