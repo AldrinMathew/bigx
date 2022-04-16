@@ -168,6 +168,11 @@
   _ASSIGN_VALUE_10X_STMT(val##8)                                               \
   _ASSIGN_VALUE_10X_STMT(val##9)
 
+#define _CONVERT_INTEGER_OF(type)                                              \
+  for (int i = 0; i < (sizeof(type) * CHAR_BIT); i++) {                        \
+    assign_at(i, (bool)((value >> i) & 1));                                    \
+  }
+
 bigx::bigint_cell::bigint_cell() { reset(); }
 
 bigx::bigint_cell::bigint_cell(bigint_cell *_right) {
