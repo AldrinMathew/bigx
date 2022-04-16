@@ -391,3 +391,54 @@ void bigx::bigint_cell::reset() {
   left = nullptr;
   right = nullptr;
 }
+
+void bigx::bigint_cell::increment_string(std::string &result, size_t index) {
+  if (index == result.length()) {
+    result = "1" + result;
+  } else if (index < result.length()) {
+    auto i = result.length() - index - 1;
+    switch (result.at(i)) {
+    case '0': {
+      result[i] = '1';
+      break;
+    }
+    case '1': {
+      result[i] = '2';
+      break;
+    }
+    case '2': {
+      result[i] = '3';
+      break;
+    }
+    case '3': {
+      result[i] = '4';
+      break;
+    }
+    case '4': {
+      result[i] = '5';
+      break;
+    }
+    case '5': {
+      result[i] = '6';
+      break;
+    }
+    case '6': {
+      result[i] = '7';
+      break;
+    }
+    case '7': {
+      result[i] = '8';
+      break;
+    }
+    case '8': {
+      result[i] = '9';
+      break;
+    }
+    case '9': {
+      result[i] = '0';
+      increment_string(result, index + 1);
+      break;
+    }
+    }
+  }
+}
