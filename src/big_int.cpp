@@ -189,6 +189,14 @@ bigx::bigint_cell::bigint_cell(bigint_cell &&other) {
   other.reset();
 }
 
+bigx::bigint_cell::bigint_cell(int value){_CONVERT_INTEGER_OF(int)}
+
+bigx::bigint_cell::bigint_cell(uint64_t value){_CONVERT_INTEGER_OF(uint64_t)}
+
+bigx::bigint_cell::bigint_cell(unsigned long long value) {
+  _CONVERT_INTEGER_OF(unsigned long long)
+}
+
 bool bigx::bigint_cell::has_left() const { return left != nullptr; }
 
 bool bigx::bigint_cell::has_right() const { return right != nullptr; }

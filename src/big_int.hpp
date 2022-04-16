@@ -2,6 +2,7 @@
 #define BIGX_INT_HPP
 
 #include "./exceptions.hpp"
+#include "limits.h"
 #include <cstdint>
 #include <functional>
 #include <iostream>
@@ -47,6 +48,25 @@ struct bigint_cell {
    * @param other The rvalue of the other instance
    */
   bigint_cell(bigint_cell &&other);
+  /**
+   * @brief Construct a new bigint_cell from an int
+   *
+   * @param value is the integer to be converted to bigint_cell
+   */
+  bigint_cell(int value);
+  /**
+   * @brief Construct a new bigint_cell from a uint64_t
+   *
+   * @param value is the 64-bit integer to be converted to bigint_cell
+   */
+  bigint_cell(uint64_t value);
+  /**
+   * @brief Construct a new bigint_cell from a "unsigned long long"
+   *
+   * @param value is the "unsigned long long" integer to be converted to
+   * bigint_cell
+   */
+  bigint_cell(unsigned long long value);
 
   /**
    * @brief These variables hold the actual bit-data associated with the big
