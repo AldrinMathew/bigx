@@ -139,6 +139,35 @@
   _BITSTRING_10X_STMT(val##1)                                                  \
   _BITSTRING_10X_STMT(val##0)
 
+#define _ASSIGN_VALUE_STMT(val)                                                \
+  else if (index == val) {                                                     \
+    _##val = value ? 0b1 : 0b0;                                                \
+  }
+
+#define _ASSIGN_VALUE_10X_STMT(val)                                            \
+  _ASSIGN_VALUE_STMT(val##0)                                                   \
+  _ASSIGN_VALUE_STMT(val##1)                                                   \
+  _ASSIGN_VALUE_STMT(val##2)                                                   \
+  _ASSIGN_VALUE_STMT(val##3)                                                   \
+  _ASSIGN_VALUE_STMT(val##4)                                                   \
+  _ASSIGN_VALUE_STMT(val##5)                                                   \
+  _ASSIGN_VALUE_STMT(val##6)                                                   \
+  _ASSIGN_VALUE_STMT(val##7)                                                   \
+  _ASSIGN_VALUE_STMT(val##8)                                                   \
+  _ASSIGN_VALUE_STMT(val##9)
+
+#define _ASSIGN_VALUE_100X_STMT(val)                                           \
+  _ASSIGN_VALUE_10X_STMT(val##0)                                               \
+  _ASSIGN_VALUE_10X_STMT(val##1)                                               \
+  _ASSIGN_VALUE_10X_STMT(val##2)                                               \
+  _ASSIGN_VALUE_10X_STMT(val##3)                                               \
+  _ASSIGN_VALUE_10X_STMT(val##4)                                               \
+  _ASSIGN_VALUE_10X_STMT(val##5)                                               \
+  _ASSIGN_VALUE_10X_STMT(val##6)                                               \
+  _ASSIGN_VALUE_10X_STMT(val##7)                                               \
+  _ASSIGN_VALUE_10X_STMT(val##8)                                               \
+  _ASSIGN_VALUE_10X_STMT(val##9)
+
 bigx::bigint_cell::bigint_cell() { reset(); }
 
 bigx::bigint_cell::bigint_cell(bigint_cell *_right) {
