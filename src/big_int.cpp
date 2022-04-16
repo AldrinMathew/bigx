@@ -442,3 +442,36 @@ void bigx::bigint_cell::increment_string(std::string &result, size_t index) {
     }
   }
 }
+
+std::string bigx::bigint_cell::to_string() {
+  std::string result = "0";
+  auto fn = [&result, this]() { this->increment_string(result, 0); };
+  loop(fn);
+  return result;
+}
+
+std::string bigx::bigint_cell::to_binary_string() {
+  std::string result = "";
+  if (has_left()) {
+    result += left->to_binary_string();
+  }
+  result +=
+      (_BITSTRING_STMT(511) _BITSTRING_STMT(510) _BITSTRING_10X_STMT(50)
+           _BITSTRING_100X_STMT(4) _BITSTRING_100X_STMT(3)
+               _BITSTRING_100X_STMT(2) _BITSTRING_100X_STMT(1)
+                   _BITSTRING_10X_STMT(9) _BITSTRING_10X_STMT(8)
+                       _BITSTRING_10X_STMT(7) _BITSTRING_10X_STMT(6)
+                           _BITSTRING_10X_STMT(5) _BITSTRING_10X_STMT(4)
+                               _BITSTRING_10X_STMT(3) _BITSTRING_10X_STMT(2)
+                                   _BITSTRING_10X_STMT(1)
+                                       _BITSTRING_10X_STMT() "");
+  return result;
+}
+
+std::string bigx::bigint_cell::bit_to_string(bool val) {
+  if (val) {
+    return "1";
+  } else {
+    return "0";
+  }
+}
