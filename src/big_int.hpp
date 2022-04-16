@@ -169,6 +169,8 @@ private:
   /// Copy values from other bigint_cell instance
   void copy_values(bigint_cell &other);
 
+  void assign_at(uint64_t index, bool val);
+
   void increment_string(std::string &result, size_t index);
 
   static std::string bit_to_string(bool val);

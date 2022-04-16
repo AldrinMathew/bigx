@@ -392,6 +392,42 @@ void bigx::bigint_cell::reset() {
   right = nullptr;
 }
 
+void bigx::bigint_cell::assign_at(uint64_t index, bool value) {
+  if (index == 0) {
+    _0 = value ? 0b1 : 0b0;
+  }
+  _ASSIGN_VALUE_STMT(1)
+  _ASSIGN_VALUE_STMT(2)
+  _ASSIGN_VALUE_STMT(3)
+  _ASSIGN_VALUE_STMT(4)
+  _ASSIGN_VALUE_STMT(5)
+  _ASSIGN_VALUE_STMT(6)
+  _ASSIGN_VALUE_STMT(7)
+  _ASSIGN_VALUE_STMT(8)
+  _ASSIGN_VALUE_STMT(9)
+  _ASSIGN_VALUE_10X_STMT(1)
+  _ASSIGN_VALUE_10X_STMT(2)
+  _ASSIGN_VALUE_10X_STMT(3)
+  _ASSIGN_VALUE_10X_STMT(4)
+  _ASSIGN_VALUE_10X_STMT(5)
+  _ASSIGN_VALUE_10X_STMT(6)
+  _ASSIGN_VALUE_10X_STMT(7)
+  _ASSIGN_VALUE_10X_STMT(8)
+  _ASSIGN_VALUE_10X_STMT(9)
+  _ASSIGN_VALUE_100X_STMT(1)
+  _ASSIGN_VALUE_100X_STMT(2)
+  _ASSIGN_VALUE_100X_STMT(3)
+  _ASSIGN_VALUE_100X_STMT(4)
+  _ASSIGN_VALUE_10X_STMT(50)
+  _ASSIGN_VALUE_STMT(510) _ASSIGN_VALUE_STMT(511) else {
+    if (has_left()) {
+      assign_at(index - 512, value);
+    } else {
+      throw exceptions::IndexOutOfRange();
+    }
+  }
+}
+
 void bigx::bigint_cell::increment_string(std::string &result, size_t index) {
   if (index == result.length()) {
     result = "1" + result;
