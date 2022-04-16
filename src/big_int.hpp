@@ -3,6 +3,8 @@
 
 #include "./exceptions.hpp"
 #include <cstdint>
+#include <functional>
+#include <iostream>
 #include <string>
 
 namespace bigx {
@@ -128,9 +130,9 @@ struct bigint_cell {
   bigint_cell *right;
 
   /// Whether this cell is linked to another cell on the left side
-  bool has_left();
+  bool has_left() const;
   /// Whether this cell is linked to another cell on the right side
-  bool has_right();
+  bool has_right() const;
   /// Add another cell to the left end of the sequence of cells
   void extend_left();
   /// Trim the extreme left cell in the linked sequence
@@ -156,12 +158,20 @@ struct bigint_cell {
    * @param fn Function to be called in each and every iteration
    */
   void loop(std::function<void()> fn);
+  /// Convert this number to a binary string
+  std::string to_binary_string();
+  /// Convert this number to a string
+  std::string to_string();
+  /// This function increments the value at a particular bit position
+  void increment_at(int index);
 
 private:
   /// Copy values from other bigint_cell instance
   void copy_values(bigint_cell &other);
-  /// This function increments the value at a particular bit position
-  void increment_at(int index);
+
+  void increment_string(std::string &result, size_t index);
+
+  static std::string bit_to_string(bool val);
 };
 } // namespace bigx
 
